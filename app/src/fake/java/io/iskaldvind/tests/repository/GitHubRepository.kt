@@ -4,7 +4,7 @@ import io.iskaldvind.tests.model.SearchResponse
 import io.iskaldvind.tests.presenter.RepositoryContract
 import retrofit2.Response
 
-internal class FakeGitHubRepository : RepositoryContract {
+internal class GitHubRepository(private val gitHubApi: GitHubApi) : RepositoryContract {
 
     override fun searchGithub(
         query: String,

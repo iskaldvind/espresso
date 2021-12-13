@@ -34,16 +34,10 @@ class MainActivityEspressoTest {
         onView(withId(R.id.searchEditText)).perform(replaceText("algol"), closeSoftKeyboard())
         onView(withId(R.id.searchEditText)).perform(pressImeActionButton())
 
-        if (BuildConfig.TYPE == MainActivity.FAKE) {
-            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
-            onView(withId(R.id.totalCountTextView)).check(matches(isDisplayed()))
-            onView(withId(R.id.totalCountTextView)).check(matches(isCompletelyDisplayed()))
-        } else {
-            onView(isRoot()).perform(delay())
-            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 2283")))
-            onView(withId(R.id.totalCountTextView)).check(matches(isDisplayed()))
-            onView(withId(R.id.totalCountTextView)).check(matches(isCompletelyDisplayed()))
-        }
+        onView(isRoot()).perform(delay())
+        onView(withId(R.id.totalCountTextView)).check(matches(withText(R.string.test_value)))
+        onView(withId(R.id.totalCountTextView)).check(matches(isDisplayed()))
+        onView(withId(R.id.totalCountTextView)).check(matches(isCompletelyDisplayed()))
     }
 
     private fun delay(): ViewAction? {
