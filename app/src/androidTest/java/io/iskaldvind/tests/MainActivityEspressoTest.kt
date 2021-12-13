@@ -36,9 +36,13 @@ class MainActivityEspressoTest {
 
         if (BuildConfig.TYPE == MainActivity.FAKE) {
             onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
+            onView(withId(R.id.totalCountTextView)).check(matches(isDisplayed()))
+            onView(withId(R.id.totalCountTextView)).check(matches(isCompletelyDisplayed()))
         } else {
             onView(isRoot()).perform(delay())
             onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 2283")))
+            onView(withId(R.id.totalCountTextView)).check(matches(isDisplayed()))
+            onView(withId(R.id.totalCountTextView)).check(matches(isCompletelyDisplayed()))
         }
     }
 
@@ -62,30 +66,14 @@ class MainActivityEspressoTest {
 
     @Test
     fun activityTextView_HasText() {
-        val assertion = matches(withText("Number of results: 0"))
+        val assertion = matches(withText("Number of results: %d"))
         onView(withId(R.id.totalCountTextView)).check(assertion)
     }
 
-    @Test
-    fun activityTextView_IsDisplayed() {
-        onView(withId(R.id.totalCountTextView)).check(matches(isDisplayed()))
-    }
 
     @Test
-    fun activityTextView_IsCompletelyDisplayed() {
-        onView(withId(R.id.totalCountTextView)).check(matches(isCompletelyDisplayed()))
-    }
-
-    @Test
-    fun activityButtons_AreEffectiveVisible() {
-        onView(withId(R.id.incrementButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.decrementButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-    }
-
-    @Test
-    fun activityButtonIncrement_IsWorking() {
-        onView(withId(R.id.incrementButton)).perform(click())
-        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 1")))
+    fun activityButton_IsEffectiveVisible() {
+        onView(withId(R.id.toDetailsActivityButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
     @After
