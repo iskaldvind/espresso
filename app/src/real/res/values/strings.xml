@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="test_value">Number of results: 2283</string>
+    <string name="test_value_espresso">Number of results: 2722</string>
+    <string name="test_value_automator">Number of results: 693</string>
+    <string name="build_flavour">.real</string>
 </resources>
