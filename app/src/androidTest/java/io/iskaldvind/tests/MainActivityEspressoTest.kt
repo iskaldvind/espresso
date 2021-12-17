@@ -1,6 +1,7 @@
 package io.iskaldvind.tests
 
 import android.view.View
+import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
@@ -10,6 +11,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.iskaldvind.tests.view.search.MainActivity
+import junit.framework.TestCase
 import org.hamcrest.Matcher
 import org.junit.After
 import org.junit.Before
@@ -32,12 +34,10 @@ class MainActivityEspressoTest {
         onView(withId(R.id.searchEditText)).perform(replaceText("algol"), closeSoftKeyboard())
         onView(withId(R.id.searchEditText)).perform(pressImeActionButton())
 
-        if (BuildConfig.TYPE == MainActivity.FAKE) {
-            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
-        } else {
-            onView(isRoot()).perform(delay())
-            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 2283")))
-        }
+        onView(isRoot()).perform(delay())
+        onView(withId(R.id.totalCountTextView)).check(matches(withText(R.string.test_value)))
+        onView(withId(R.id.totalCountTextView)).check(matches(isDisplayed()))
+        onView(withId(R.id.totalCountTextView)).check(matches(isCompletelyDisplayed()))
     }
 
     private fun delay(): ViewAction? {
@@ -48,6 +48,26 @@ class MainActivityEspressoTest {
                 uiController.loopMainThreadForAtLeast(2000)
             }
         }
+    }
+
+    @Test
+    fun activityTextView_NotNull() {
+        scenario.onActivity {
+            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
+            TestCase.assertNotNull(totalCountTextView)
+        }
+    }
+
+    @Test
+    fun activityTextView_HasText() {
+        val assertion = matches(withText("Number of results: %d"))
+        onView(withId(R.id.totalCountTextView)).check(assertion)
+    }
+
+
+    @Test
+    fun activityButton_IsEffectiveVisible() {
+        onView(withId(R.id.toDetailsActivityButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
     @After
