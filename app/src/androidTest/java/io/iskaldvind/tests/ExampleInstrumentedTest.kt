@@ -1,7 +1,7 @@
 package io.iskaldvind.tests
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.runner.AndroidJUnit4
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("io.iskaldvind.tests", appContext.packageName)
+        assertEquals("io.iskaldvind.tests${appContext.getString(R.string.build_flavour)}", appContext.packageName)
     }
 }
