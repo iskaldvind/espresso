@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "io.iskaldvind.tests"
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
@@ -42,7 +42,7 @@ android {
             java.srcDirs += "src/sharedTestsData/java"
         }
         test {
-            java.srcDirs += "src/sharedTestsData/java"
+            //java.srcDirs += "src/sharedTestsData/java"
         }
     }
 
@@ -75,8 +75,7 @@ dependencies {
 
     //Test core
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0-alpha03'
+
     //Mockito
     testImplementation "org.mockito:mockito-core:2.19.0"
     testImplementation 'org.mockito:mockito-inline:2.8.9'
@@ -95,4 +94,7 @@ dependencies {
     //UI Automator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
     androidTestImplementation 'androidx.test:rules:1.4.1-alpha03'
+
+    debugImplementation 'androidx.fragment:fragment-testing:1.3.3'
+    debugImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
 }
