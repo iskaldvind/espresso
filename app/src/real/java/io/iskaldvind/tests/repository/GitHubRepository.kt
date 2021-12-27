@@ -2,11 +2,15 @@ package io.iskaldvind.tests.repository
 
 import io.iskaldvind.tests.model.SearchResponse
 import io.iskaldvind.tests.presenter.RepositoryContract
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 internal class GitHubRepository(private val gitHubApi: GitHubApi) : RepositoryContract {
+
 
     override fun searchGithub(
         query: String,
@@ -29,5 +33,15 @@ internal class GitHubRepository(private val gitHubApi: GitHubApi) : RepositoryCo
                 callback.handleGitHubError()
             }
         })
+    }
+
+    override fun searchGithub(query: String): Observable<SearchResponse> {
+        return gitHubApi.searchGithubRx(query)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override suspend fun searchGithubAsync(query: String): SearchResponse {
+        return gitHubApi.searchGithubAsync(query).await()
     }
 }

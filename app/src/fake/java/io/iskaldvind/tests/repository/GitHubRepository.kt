@@ -3,16 +3,25 @@ package io.iskaldvind.tests.repository
 import io.iskaldvind.tests.model.SearchResponse
 import io.iskaldvind.tests.model.SearchResult
 import io.iskaldvind.tests.presenter.RepositoryContract
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import kotlin.random.Random
 
-internal class GitHubRepository(private val gitHubApi: GitHubApi) : RepositoryContract {
+class GitHubRepository(private val gitHubApi: GitHubApi) : RepositoryContract {
 
     override fun searchGithub(
         query: String,
         callback: RepositoryCallback
     ) {
         callback.handleGitHubResponse(Response.success(getFakeResponse()))
+    }
+
+    override fun searchGithub(query: String): Observable<SearchResponse> {
+        return gitHubApi.searchGithubRx(query)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
     private fun getFakeResponse(): SearchResponse {
@@ -38,4 +47,7 @@ internal class GitHubRepository(private val gitHubApi: GitHubApi) : RepositoryCo
         return SearchResponse(list.size, list)
     }
 
+    override suspend fun searchGithubAsync(query: String): SearchResponse {
+        return getFakeResponse()
+    }
 }
